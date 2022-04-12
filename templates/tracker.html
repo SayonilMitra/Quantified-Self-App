@@ -1,0 +1,45 @@
+{% extends 'layout.html' %} {% block body %}
+
+<form action="/createtracker/{{user_name}}" method="post">
+  <label for="tracker_name">Tracker Name</label>
+  <input type="text" name="tracker_name" id="tracker_name" /><br />
+  <label for="tracker_description">Tracker Description</label>
+  <input
+    type="text"
+    name="tracker_description"
+    id="tracker_description"
+  /><br />
+
+  <input
+    type="radio"
+    name="tracker_type"
+    id="numerical_tracker"
+    value="numerical_tracker"
+  />
+  <label for="numerical_tracker">Numerical</label><br />
+  <input
+    type="radio"
+    name="tracker_type"
+    id="boolean_tracker"
+    value="boolean_tracker"
+  />
+  <label for="boolean_tracker">Yes/No</label><br />
+  <input
+    type="radio"
+    name="tracker_type"
+    id="time_tracker"
+    value="time_tracker"
+  />
+  <label for="time_tracker">Time Duration</label><br />
+  <input type="radio" name="tracker_type" id="mo_tracker" value="mo_tracker" />
+  <label for="mo_tracker">Multiple Options</label>
+  <p>
+    If you chose Multiple options, type your options below, seperated by comma
+  </p>
+  <input type="text" name="user_defined_options" id="user_defined_options" />
+  <br />
+  <input type="submit" value="Create" />
+</form>
+<br />
+
+{% endblock %}

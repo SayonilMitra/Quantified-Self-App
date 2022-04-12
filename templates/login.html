@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h1>Quantified Self App</h1>
+
+{% if login_error_msg != "" %}
+<div>
+    {{login_error_msg}}
+</div>
+<br>
+{% endif %}
+
+<form action="/login" method="post" class="container-sm w-25">
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="user_name">User Name</span>
+        <input type="text" class="form-control" name="user_name" aria-label="Username" placeholder="Username"
+            aria-describedby="user_name"><br>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="password">Password</span>
+        <input type="text" class="form-control" name="password" aria-label="Password" placeholder="Password"
+            aria-describedby="password"><br>
+    </div>
+    <input type="submit" value="Login">
+</form>
+<br>
+<p>New here? Create new account below</p>
+{% if signup_error_msg != "" %}
+<div>
+    {{signup_error_msg}}
+</div>
+<br>
+{% endif %}
+<form action="/register" method="post" class="container-sm w-25">
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="user_name">User Name</span>
+        <input type="text" class="form-control" name="user_name" aria-label="Username" placeholder="Username"
+            aria-describedby="user_name"><br>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="password1">Password</span>
+        <input type="text" class="form-control" name="password1" aria-label="Password" placeholder="Type Password"
+            aria-describedby="password1"><br>
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="password2">Password</span>
+        <input type="text" class="form-control" name="password2" aria-label="Password" placeholder="Confirm Password"
+            aria-describedby="password2"><br>
+    </div>
+
+    <input type="submit" value="Register">
+</form>
+
+{% endblock %}

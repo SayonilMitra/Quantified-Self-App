@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% block body %}
+<p>
+    Tracker Name: {{tracker["tracker_name"]}} <br>
+    Description: {{tracker["tracker_description"]}} <br>
+    Tracker last updated: {{tracker["tracker_log_time"]}} <br>
+    {% if tracker["tracker_type"] == "numerical_tracker"%}type - Numerical{% endif %}
+    {% if tracker["tracker_type"] == "boolean_tracker"%}type - Yes/No{% endif %}
+    {% if tracker["tracker_type"] == "mo_tracker"%}type - Multiple Options{% endif %}
+    {% if tracker["tracker_type"] == "time_tracker"%}type - Time Duration{% endif %}<br>
+    <a href='/edittrackerform/{{tracker["tracker_id"]}}'>Edit</a>
+</p>
+
+{% if tracker["tracker_type"] == "numerical_tracker"%}
+
+<!-- Generate graph -->
+Progress so far (x-axis = log ID number, y-axis = values recorded)<br>
+<canvas id="myChart" style="width:100%;max-width:700px;margin-left: auto;margin-right: auto;"></canvas>
+<script>
+    var xValues = {{ labels | tojson}};
+    var yValues = {{ values | tojson}};
+
+    new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: "rgba(0,0,255,0.1)",
+                data: yValues,
+                lineTension: 0.3
+            }]
+        },
+        options: {
+            legend: { display: false },
+        }
+    });
+</script>
+
+{% endif %}
+
+
+{% include "html_graph.html" %}
+
+<table class="table table-bordered table-striped table-hover table-sm" style="width:50%;margin:auto">
+    <tr class="table-primary">
+        <th>ID number</td>
+        <th>Value</td>
+        <th>Notes</th>
+        <th>Date</td>
+        <th>Action</td>
+    </tr>
+    <tbody>
+        {% for userlog in user_logs%}
+        <tr>
+            <td>{{userlog["log_id"]}}</td>
+            <td>{{userlog["log_value"]}}</td>
+            <td>{% if userlog["log_note"] == "" %}{% else %}{{userlog["log_note"]}}{% endif %}</td>
+            <td>{{userlog["log_time"]}}</td>
+            <td>
+                <a href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
+                <a href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+Add new data <br> <br>
+<form class="" action='/createlog/{{tracker["tracker_id"]}}' method="post" class="container-sm w-25">
+    {% include "value_input_form.html" %}
+    <br>
+    <input type="submit" value="Record">
+</form>
+<br>
+
+<a href="/dashboard/{{user_name}}">Return</a> to dashboard
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'layout.html' %} {% block body %}
+
+<p>Welcome {{user_name}}, this is your dashboard</p>
+last logged in: {{last_login_time}} <br>
+<a href="/tracker/{{user_name}}">Create a new tracker</a><br>
+<a href="/logout//{{user_name}}">Log Out</a><br> <br>
+<h2>List of trackers</h2> <br>
+
+{% for tracker in usertrackers %}
+Name - {{tracker["tracker_name"]}}<br>
+Last recorded - {{tracker["tracker_log_time"]}}<br>
+Description - {{tracker["tracker_description"]}} <br>
+{% if tracker["tracker_type"] == "numerical_tracker"%}Type - Numerical{% endif %}
+{% if tracker["tracker_type"] == "boolean_tracker"%}Type - Yes/No{% endif %}
+{% if tracker["tracker_type"] == "mo_tracker"%}Type - Multiple Options{% endif %}
+{% if tracker["tracker_type"] == "time_tracker"%}Type - Time Duration{% endif %}
+<br>
+
+<a href='/trackerdetails/{{tracker["tracker_id"]}}'>Details</a> <br>
+<a href='/deletetracker/{{tracker["tracker_id"]}}'>Remove</a> <br> <br>
+{% endfor %}
+
+{% endblock %}

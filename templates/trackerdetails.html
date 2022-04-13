@@ -1,72 +1,100 @@
 {% extends 'layout.html' %}
 {% block body %}
-<p>
-    Tracker Name: {{tracker["tracker_name"]}} <br>
-    Description: {{tracker["tracker_description"]}} <br>
-    Tracker last updated: {{tracker["tracker_log_time"]}} <br>
-    {% if tracker["tracker_type"] == "numerical_tracker"%}type - Numerical{% endif %}
-    {% if tracker["tracker_type"] == "boolean_tracker"%}type - Yes/No{% endif %}
-    {% if tracker["tracker_type"] == "mo_tracker"%}type - Multiple Options{% endif %}
-    {% if tracker["tracker_type"] == "time_tracker"%}type - Time Duration{% endif %}<br>
-    <a href='/edittrackerform/{{tracker["tracker_id"]}}'>Edit</a>
-</p>
 
-{% if tracker["tracker_type"] == "numerical_tracker"%}
+<div class="row mt-5 justify-content-center">
+    <div class="col-auto d-flex text-center justify-content-center">
+        Tracker Name: {{tracker["tracker_name"]}} <br>
+        Description: {{tracker["tracker_description"]}} <br>
+        Tracker last updated: {{tracker["tracker_log_time"]}} <br>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        Tracker type -
+        {% if tracker["tracker_type"] == "numerical_tracker"%}Numerical
+        {% endif %}
+        {% if tracker["tracker_type"] == "boolean_tracker"%}Yes/No{% endif %}
+        {% if tracker["tracker_type"] == "mo_tracker"%}Multiple Options{% endif %}
+        {% if tracker["tracker_type"] == "time_tracker"%}Time Duration{% endif %}
+        <!-- <span class="badge badge-primary">
+            {% if tracker["tracker_type"] == "numerical_tracker"%}Numerical
+            {% endif %}
+            {% if tracker["tracker_type"] == "boolean_tracker"%}Yes/No{% endif %}
+            {% if tracker["tracker_type"] == "mo_tracker"%}Multiple Options{% endif %}
+            {% if tracker["tracker_type"] == "time_tracker"%}Time Duration{% endif %}
+        </span> -->
+    </div>
+</div>
+<div class="row mt-2 justify-content-center">
+    <div class="col-auto">
+        <a class="btn btn-success" href='/edittrackerform/{{tracker["tracker_id"]}}'>Edit Tracker Details</a>
+    </div>
+</div>
 
-<!-- Generate graph -->
-Progress so far (x-axis = log ID number, y-axis = values recorded)<br>
-<canvas id="myChart" style="width:100%;max-width:700px;margin-left: auto;margin-right: auto;"></canvas>
-<script>
-    var xValues = {{ labels | tojson}};
-    var yValues = {{ values | tojson}};
+<div class="row mt-5 justify-content-center">
+    <div class="col-auto">
+        {% if tracker["tracker_type"] == "numerical_tracker"%}
 
-    new Chart("myChart", {
-        type: "line",
-        data: {
-            labels: xValues,
-            datasets: [{
-                fill: false,
-                lineTension: 0,
-                backgroundColor: "rgba(0,0,255,1.0)",
-                borderColor: "rgba(0,0,255,0.1)",
-                data: yValues,
-                lineTension: 0.3
-            }]
-        },
-        options: {
-            legend: { display: false },
-        }
-    });
-</script>
+        <!-- Generate graph -->
+        Progress so far (x-axis = log ID number, y-axis = values recorded)<br>
+        <canvas id="myChart" style="width:100%;max-width:700px;margin-left: auto;margin-right: auto;"></canvas>
+        <script>
+            var xValues = {{ labels | tojson}};
+            var yValues = {{ values | tojson}};
 
-{% endif %}
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: yValues,
+                        lineTension: 0.3
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                }
+            });
+        </script>
 
+        {% endif %}
+    </div>
+</div>
 
 {% include "html_graph.html" %}
 
-<table class="table table-bordered table-striped table-hover table-sm" style="width:50%;margin:auto">
-    <tr class="table-primary">
-        <th>ID number</td>
-        <th>Value</td>
-        <th>Notes</th>
-        <th>Date</td>
-        <th>Action</td>
-    </tr>
-    <tbody>
-        {% for userlog in user_logs%}
-        <tr>
-            <td>{{userlog["log_id"]}}</td>
-            <td>{{userlog["log_value"]}}</td>
-            <td>{% if userlog["log_note"] == "" %}{% else %}{{userlog["log_note"]}}{% endif %}</td>
-            <td>{{userlog["log_time"]}}</td>
-            <td>
-                <a href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
-                <a href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row mt-5 justify-content-center">
+    <div class="col-6">
+        <table class="table thead-light table-dark table-bordered table-striped table-hover table-sm text-center">
+            <tr class="table-primary">
+                <th>ID number</td>
+                <th>Value</td>
+                <th>Notes</th>
+                <th>Date</td>
+                <th>Action</td>
+            </tr>
+            <tbody>
+                {% for userlog in user_logs%}
+                <tr>
+                    <td>{{userlog["log_id"]}}</td>
+                    <td>{{userlog["log_value"]}}</td>
+                    <td>{% if userlog["log_note"] == "" %}{% else %}{{userlog["log_note"]}}{% endif %}</td>
+                    <td>{{userlog["log_time"]}}</td>
+                    <td>
+                        <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
+                        <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
 
 Add new data <br> <br>
 <form class="" action='/createlog/{{tracker["tracker_id"]}}' method="post" class="container-sm w-25">

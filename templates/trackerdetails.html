@@ -27,7 +27,23 @@
 </div>
 <div class="row mt-2 justify-content-center">
     <div class="col-auto">
-        <a class="btn btn-success" href='/edittrackerform/{{tracker["tracker_id"]}}'>Edit Tracker Details</a>
+        <a class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">Edit
+            Tracker Details (toggle)</a>
+    </div>
+</div>
+<div class="row mt-3 d-none justify-content-center" id="edittrackerform">
+    <div class="col-auto">
+        <form action="/edittracker/{{tracker_id}}" method="post">
+            <label class="form-label" for="tracker_name">Tracker name</label>
+            <input class="form-control" type="text" name="tracker_name" id="tracker_name"> <br>
+            <label class="form-label" for="tracker_description">Tracker description</label>
+            <input class="form-control" type="text" name="tracker_description" id="tracker_description">
+        </form>
+    </div>
+    <div class="col-12 justify-content-center d-flex">
+        <div class="col-auto">
+            <input class="btn btn-primary mt-3" type="submit" value="Confirm">
+        </div>
     </div>
 </div>
 
@@ -69,7 +85,8 @@
 
 <div class="row mt-5 justify-content-center">
     <div class="col-6">
-        <table class="table thead-light table-dark table-bordered table-striped table-hover table-sm text-center">
+        <table
+            class="table thead-light table-dark table-bordered table-striped table-hover table-sm text-center table-responsive">
             <tr class="table-primary">
                 <th>ID number</td>
                 <th>Value</td>
@@ -82,27 +99,57 @@
                 <tr>
                     <td>{{userlog["log_id"]}}</td>
                     <td>{{userlog["log_value"]}}</td>
-                    <td>{% if userlog["log_note"] == "" %}{% else %}{{userlog["log_note"]}}{% endif %}</td>
+                    <td>{% if userlog["log_note"] == None %}-{% else %}{{userlog["log_note"]}}{% endif %}</td>
                     <td>{{userlog["log_time"]}}</td>
                     <td>
+                        <!-- <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a> -->
+                        <a class="btn btn-primary" href="#editlogform"
+                            onclick="document.getElementById('editlogform').classList.toggle('d-none')">Edit</a>
                         <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
-                        <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
 </div>
 
-Add new data <br> <br>
-<form class="" action='/createlog/{{tracker["tracker_id"]}}' method="post" class="container-sm w-25">
-    {% include "value_input_form.html" %}
-    <br>
-    <input type="submit" value="Record">
-</form>
-<br>
+<div class="row justify-content-center d-none" id="editlogform">
+    <div class="col-12 col-sm-8 col-md-4">
+        Input new value <br>
+        <form action="/editlog/{{log_id}}" method="post">
+            {% include "value_input_form.html" %}
+            <br>
+            <input type="submit" value="Confirm">
+        </form>
+    </div>
+</div>
 
-<a href="/dashboard/{{user_name}}">Return</a> to dashboard
+<div class="row justify-content-center">
+    <div class="col-auto">
+        Add new data
+    </div>
+</div>
+
+<!-- Form for adding new data -->
+
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-8 col-md-4">
+        <form id="record_value" class="" action='/createlog/{{tracker["tracker_id"]}}' method="post">
+            {% include "value_input_form.html" %}
+        </form>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <button form="record_value" class="btn btn-primary mt-3" type="submit">Add Value</button>
+    </div>
+</div>
+
+<div class="row mt-5 mb-5 justify-content-center">
+    <div class="col-auto">
+        <a class="btn btn-light" href="/dashboard/{{user_name}}">Return to dashboard</a>
+    </div>
+</div>
+
 {% endblock %}

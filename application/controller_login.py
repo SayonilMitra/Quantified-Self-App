@@ -16,13 +16,15 @@ def index():
 def log_in():
     user_name = request.form.get("user_name")
     password = request.form.get("password")
+
+    # Check if user name exists
     user_name_test = User.query.filter_by(user_name=user_name).first()
 
     if user_name == "":
         return render_template("login.html",login_error_msg="User name can not be empty",title="Login")
     elif password == "":
         return render_template("login.html",login_error_msg="Password can not be empty",title="Login")
-    elif user_name_test==None:
+    elif user_name_test == None:
         return render_template("login.html",login_error_msg="User not found, please create new account",title="Login")
     elif password != user_name_test.password:
         return render_template("login.html",login_error_msg="Wrong password, please try again",title="Login")
@@ -37,6 +39,8 @@ def register():
     user_name = request.form.get("user_name")
     password1 = request.form.get("password1")
     password2 = request.form.get("password2")
+
+    # check if user mame exists
     is_user_name_present = User.query.filter_by(user_name=user_name).first()
     if is_user_name_present != None:
         return render_template("login.html",signup_error_msg="Username not available, try a different one",title="Login")

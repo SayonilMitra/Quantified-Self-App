@@ -11,8 +11,7 @@
 <div class="row justify-content-center">
     <div class="col-auto">
         Tracker type -
-        {% if tracker["tracker_type"] == "numerical_tracker"%}Numerical
-        {% endif %}
+        {% if tracker["tracker_type"] == "numerical_tracker"%}Numerical{% endif %}
         {% if tracker["tracker_type"] == "boolean_tracker"%}Yes/No{% endif %}
         {% if tracker["tracker_type"] == "mo_tracker"%}Multiple Options{% endif %}
         {% if tracker["tracker_type"] == "time_tracker"%}Time Duration{% endif %}
@@ -27,31 +26,104 @@
 </div>
 <div class="row mt-2 justify-content-center">
     <div class="col-auto">
-        <a class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">Edit
-            Tracker Details (toggle)</a>
+        <a class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">Edit Tracker Details (toggle)</a>
     </div>
 </div>
+
+<!-- Form to edit tracker name and description -->
+
 <div class="row mt-3 d-none justify-content-center" id="edittrackerform">
-    <div class="col-auto">
-        <form action="/edittracker/{{tracker_id}}" method="post">
-            <label class="form-label" for="tracker_name">Tracker name</label>
-            <input class="form-control" type="text" name="tracker_name" id="tracker_name"> <br>
-            <label class="form-label" for="tracker_description">Tracker description</label>
-            <input class="form-control" type="text" name="tracker_description" id="tracker_description">
-        </form>
-    </div>
-    <div class="col-12 justify-content-center d-flex">
-        <div class="col-auto">
-            <input class="btn btn-primary mt-3" type="submit" value="Confirm">
+    <div class="col-12 col-sm-8 col-md-3 border border-light rounded-3 p-4">
+        <div class="row">
+            <div class="col">
+                <form action="/edittracker/{{tracker_id}}" method="post">
+                    <label class="form-label" for="tracker_name">Tracker name</label>
+                    <input class="form-control" type="text" name="tracker_name" id="tracker_name"> <br>
+                    <label class="form-label" for="tracker_description">Tracker description</label>
+                    <input class="form-control" type="text" name="tracker_description" id="tracker_description">
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <input class="btn btn-primary mt-3" type="submit" value="Confirm Edit">
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row mt-5 justify-content-center">
+    <!-- Form for adding new data -->
+    <div class="col-12 col-sm-8 col-md-3 col-xl-3">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                Add new data
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <form id="record_value" class="" action='/createlog/{{tracker["tracker_id"]}}' method="post">
+                    {% include "value_input_form.html" %}
+                </form>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-auto">
+                <button form="record_value" class="btn btn-primary" type="submit">Add Value</button>
+            </div>
+        </div>
+    </div>
+    <!-- This is the table for log details of a tracker -->
+    <div class="col col-sm-12 col-md-12 col-xl-7">
+        <table class="table thead-light table-dark table-bordered table-hover text-center table-responsive align-middle">
+            <tr class="table-primary">
+                <th>ID number</td>
+                <th>Value</td>
+                <th>Notes</th>
+                <th>Date</td>
+                <th>Action</td>
+            </tr>
+            <tbody>
+                {% for userlog in user_logs%}
+                <tr>
+                    <td>{{userlog["log_id"]}}</td>
+                    <td>{{userlog["log_value"]}}</td>
+                    <td>{% if userlog["log_note"] == None %}-{% else %}{{userlog["log_note"]}}{% endif %}</td>
+                    <td>{{userlog["log_time"]}}</td>
+                    <td>
+                        <div class="row justify-content-center">
+                            <!-- <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a> -->
+                            <div class="col-6">
+                                <a class="btn btn-primary" href="#editlogform" onclick="document.getElementById('editlogform').classList.toggle('d-none')">Edit</a>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <div class="row justify-content-center d-none" id="editlogform">
+                        <div class="col-12 col-sm-8 col-md-4">
+                            Input new value <br>
+                            <form action="/editlog/{{log_id}}" method="post">
+                                {% include "value_input_form.html" %}
+                                <br>
+                                <input type="submit" value="Confirm">
+                            </form>
+                        </div>
+                    </div>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- <div class="row mt-5 justify-content-center">
     <div class="col-auto">
         {% if tracker["tracker_type"] == "numerical_tracker"%}
 
-        <!-- Generate graph -->
         Progress so far (x-axis = log ID number, y-axis = values recorded)<br>
         <canvas id="myChart" style="width:100%;max-width:700px;margin-left: auto;margin-right: auto;"></canvas>
         <script>
@@ -81,70 +153,7 @@
     </div>
 </div>
 
-{% include "html_graph.html" %}
-
-<div class="row mt-5 justify-content-center">
-    <div class="col-6">
-        <table
-            class="table thead-light table-dark table-bordered table-striped table-hover table-sm text-center table-responsive">
-            <tr class="table-primary">
-                <th>ID number</td>
-                <th>Value</td>
-                <th>Notes</th>
-                <th>Date</td>
-                <th>Action</td>
-            </tr>
-            <tbody>
-                {% for userlog in user_logs%}
-                <tr>
-                    <td>{{userlog["log_id"]}}</td>
-                    <td>{{userlog["log_value"]}}</td>
-                    <td>{% if userlog["log_note"] == None %}-{% else %}{{userlog["log_note"]}}{% endif %}</td>
-                    <td>{{userlog["log_time"]}}</td>
-                    <td>
-                        <!-- <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a> -->
-                        <a class="btn btn-primary" href="#editlogform"
-                            onclick="document.getElementById('editlogform').classList.toggle('d-none')">Edit</a>
-                        <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="row justify-content-center d-none" id="editlogform">
-    <div class="col-12 col-sm-8 col-md-4">
-        Input new value <br>
-        <form action="/editlog/{{log_id}}" method="post">
-            {% include "value_input_form.html" %}
-            <br>
-            <input type="submit" value="Confirm">
-        </form>
-    </div>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-auto">
-        Add new data
-    </div>
-</div>
-
-<!-- Form for adding new data -->
-
-<div class="row justify-content-center">
-    <div class="col-12 col-sm-8 col-md-4">
-        <form id="record_value" class="" action='/createlog/{{tracker["tracker_id"]}}' method="post">
-            {% include "value_input_form.html" %}
-        </form>
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col-auto">
-        <button form="record_value" class="btn btn-primary mt-3" type="submit">Add Value</button>
-    </div>
-</div>
+{% include "html_graph.html" %} -->
 
 <div class="row mt-5 mb-5 justify-content-center">
     <div class="col-auto">

@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
-<form action="/editlog/{{log_id}}" method="post">
-
-    {% include "value_input_form.html" %}
-    <br>
-    <input type="submit" value="Confirm">
-</form>
-
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-6 col-md-3">
+        <form action="/editlog/{{log_id}}" method="post">
+            {% include "value_input_form.html" %}
+            <br>
+            <input type="submit" value="Confirm">
+        </form>
+    </div>
+</div>
 
 {% endblock %}

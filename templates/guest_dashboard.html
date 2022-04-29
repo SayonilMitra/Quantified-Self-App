@@ -1,0 +1,104 @@
+{% extends 'layout.html' %} {% block body %}
+
+<div class="row mt-5 justify-content-center">
+    <div class="col-auto h5">
+        Welcome guest user, this is an example dashboard
+    </div>
+</div>
+
+<div class="row mt-2 justify-content-center">
+    <div class="col-auto h6">
+        Last logged in: Thu Apr 28 10:59:12 2022 <br>
+    </div>
+</div>
+
+<div class="row mt-2 justify-content-center">
+    <div class="col-auto">
+        <a class="btn btn-success" href="#">Create a new tracker</a>
+    </div>
+</div>
+
+<div class="row mt-3 justify-content-center">
+    <div class="col-auto">
+        <h2 class="h2">List of example trackers</h2>
+    </div>
+</div>
+
+<!-- Display all user made trackers -->
+
+<div class="row justify-content-center">
+
+    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+        <div class="row justify-content-center text-center">
+            <div class="col-auto">
+                <div class="p-3 border-light border rounded">
+                    Name - Water Intake <br>
+                    Last recorded - Mon Mar 21 22:42:46 2022 <br>
+                    Description - glasses of water each day <br>
+                    Type - Numerical
+                    <br>
+                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a><br>
+                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+        <div class="row justify-content-center text-center">
+            <div class="col-auto">
+                <div class="p-3 border-light border rounded">
+                    Name - Sleep <br>
+                    Last recorded - Mon Mar 21 22:44:03 2022 <br>
+                    Description - did I have enough sleep <br>
+                    Type - Yes/No
+                    <br>
+                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a>
+                    <br>
+                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+        <div class="row justify-content-center text-center">
+            <div class="col-auto">
+                <div class="p-3 border-light border rounded">
+                    Name - Exercise <br>
+                    Last recorded - Mon Mar 21 22:44:35 2022 <br>
+                    Description - per day <br>
+                    Type - Time Duration <br>
+                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a>
+                    <br>
+                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+        <div class="row justify-content-center text-center">
+            <div class="col-auto">
+                <div class="p-3 border-light border rounded">
+                    Name - Cars <br>
+                    Last recorded - Mon Mar 21 22:45:57 2022 <br>
+                    Description - cars I saw today outside <br>
+                    Type - Multiple Options
+                    <br>
+                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a><br>
+                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <a class="btn btn-danger mt-5" href="/">Login page</a>
+        <a class="btn btn-primary mt-5" href="/guest/tracker_demo">Example tracker page</a>
+    </div>
+</div>
+
+{% endblock %}

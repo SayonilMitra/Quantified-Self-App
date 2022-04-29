@@ -64,3 +64,14 @@ def log_out(user_name):
     session.pop('user_name', None)
     #return session
     return redirect("/")
+
+# Guest view
+
+@app.route("/guest/dashboard")
+def guest_dashboard():
+    return render_template("guest_dashboard.html")
+
+
+@app.route("/guest/tracker_demo")
+def guest_tracker_info():
+    return render_template("guest_tracker_demo.html")

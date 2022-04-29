@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+
 {% block body %}
 
 <div class="row mt-5 justify-content-center">
@@ -8,6 +9,7 @@
         Tracker last updated: {{tracker["tracker_log_time"]}} <br>
     </div>
 </div>
+
 <div class="row justify-content-center">
     <div class="col-auto">
         Tracker type -
@@ -15,18 +17,14 @@
         {% if tracker["tracker_type"] == "boolean_tracker"%}Yes/No{% endif %}
         {% if tracker["tracker_type"] == "mo_tracker"%}Multiple Options{% endif %}
         {% if tracker["tracker_type"] == "time_tracker"%}Time Duration{% endif %}
-        <!-- <span class="badge badge-primary">
-            {% if tracker["tracker_type"] == "numerical_tracker"%}Numerical
-            {% endif %}
-            {% if tracker["tracker_type"] == "boolean_tracker"%}Yes/No{% endif %}
-            {% if tracker["tracker_type"] == "mo_tracker"%}Multiple Options{% endif %}
-            {% if tracker["tracker_type"] == "time_tracker"%}Time Duration{% endif %}
-        </span> -->
     </div>
 </div>
+
 <div class="row mt-2 justify-content-center">
     <div class="col-auto">
-        <a class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">Edit Tracker Details (toggle)</a>
+        <a href="#" class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">
+            Edit Tracker Details (toggle)
+        </a>
     </div>
 </div>
 
@@ -53,8 +51,11 @@
 </div>
 
 <div class="row mt-5 justify-content-center">
-    <!-- Form for adding new data -->
+
     <div class="col-12 col-sm-8 col-md-3 col-xl-3">
+
+        <!-- Form for adding new data -->
+
         <div class="row justify-content-center">
             <div class="col-auto">
                 Add new data
@@ -72,8 +73,31 @@
                 <button form="record_value" class="btn btn-primary" type="submit">Add Value</button>
             </div>
         </div>
+
+        <!-- Form to edit vale and notes for individual record/log in a tracker -->
+
+        <!-- <div class="row justify-content-center d-none mt-4" id="editlogform">
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col">
+                        Edit old value
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form action="/editlog/{{log_id}}" method="post">
+                            {% include "value_input_form.html" %}
+                            <br>
+                            <input class="btn btn-warning" type="submit" value="Confirm">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </div>
+
     <!-- This is the table for log details of a tracker -->
+
     <div class="col col-sm-12 col-md-12 col-xl-7">
         <table class="table thead-light table-dark table-bordered table-hover text-center table-responsive align-middle">
             <tr class="table-primary">
@@ -81,7 +105,8 @@
                 <th>Value</td>
                 <th>Notes</th>
                 <th>Date</td>
-                <th>Action</td>
+                <th>Action</th>
+                <th class="d-none" id="hiddenHeader">Edit</th>
             </tr>
             <tbody>
                 {% for userlog in user_logs%}
@@ -92,9 +117,8 @@
                     <td>{{userlog["log_time"]}}</td>
                     <td>
                         <div class="row justify-content-center">
-                            <!-- <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a> -->
                             <div class="col-6">
-                                <a class="btn btn-primary" href="#editlogform" onclick="document.getElementById('editlogform').classList.toggle('d-none')">Edit</a>
+                                <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
                             </div>
                             <div class="col">
                                 <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
@@ -102,58 +126,11 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <div class="row justify-content-center d-none" id="editlogform">
-                        <div class="col-12 col-sm-8 col-md-4">
-                            Input new value <br>
-                            <form action="/editlog/{{log_id}}" method="post">
-                                {% include "value_input_form.html" %}
-                                <br>
-                                <input type="submit" value="Confirm">
-                            </form>
-                        </div>
-                    </div>
-                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
-<!-- <div class="row mt-5 justify-content-center">
-    <div class="col-auto">
-        {% if tracker["tracker_type"] == "numerical_tracker"%}
-
-        Progress so far (x-axis = log ID number, y-axis = values recorded)<br>
-        <canvas id="myChart" style="width:100%;max-width:700px;margin-left: auto;margin-right: auto;"></canvas>
-        <script>
-            var xValues = {{ labels | tojson}};
-            var yValues = {{ values | tojson}};
-
-            new Chart("myChart", {
-                type: "line",
-                data: {
-                    labels: xValues,
-                    datasets: [{
-                        fill: false,
-                        lineTension: 0,
-                        backgroundColor: "rgba(0,0,255,1.0)",
-                        borderColor: "rgba(0,0,255,0.1)",
-                        data: yValues,
-                        lineTension: 0.3
-                    }]
-                },
-                options: {
-                    legend: { display: false },
-                }
-            });
-        </script>
-
-        {% endif %}
-    </div>
-</div>
-
-{% include "html_graph.html" %} -->
 
 <div class="row mt-5 mb-5 justify-content-center">
     <div class="col-auto">

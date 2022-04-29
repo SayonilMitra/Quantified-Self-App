@@ -29,17 +29,29 @@ Your input: <br>
 {% endif %}
 
 {% if tracker["tracker_type"] == "time_tracker"%}
-<p>Time duration</p>
-<div class="input-group mb-3 container-sm w-25">
-    <span class="input-group-text" id="log_value_hours">Hour</span>
-    <input type="number" max="23" min="0" class="form-control" name="log_value_hours" aria-label="Hour"
-        aria-describedby="log_value_hours"><br>
-</div>
-
-<div class="input-group mb-3 container-sm w-25">
-    <span class="input-group-text" id="log_value_minutes">Minutes</span>
-    <input type="number" max="59" min="0" class="form-control" name="log_value_minutes" aria-label="Minutes"
-        aria-describedby="log_value_minutes"><br>
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <label class="col-form-label" for="log_value_hours">Hour</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="number" step="1" max="23" min="0" class="form-control" name="log_value_hours" id="log_value_hours">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label class="col-form-label" for="log_value_minutes">Minutes</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="number" step="1" max="59" min="0" class="form-control" name="log_value_minutes" id="log_value_minutes">
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %}
 

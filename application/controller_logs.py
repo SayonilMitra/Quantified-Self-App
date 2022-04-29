@@ -30,42 +30,37 @@ def createlog(tracker_id):
     db.session.commit()
     return redirect(f"/trackerdetails/{tracker_id}")
 
-# form to edit log
+# edit log details
 
-@app.route("/editlogform/<log_id>")
-def editlogform(log_id):
-    tracker_id = Trackerlogs.query.filter_by(log_id=log_id).first().tracker_id
+@app.route("/editlogdetails",methods=["POST"])
+def editlogdetails():
+    log_id = request.form.get("log_id")
+    log_value_new = request.form.get("log_value")
+    log_note_new = request.form.get("log_note")
+    tracker_id = request.form.get("tracker_id")
+
+    log_data= Trackerlogs.query.filter_by(log_id=log_id).first()
+    user_logs = Trackerlogs.query.filter_by(tracker_id=tracker_id).all()
     tracker = Tracker.query.filter_by(tracker_id=tracker_id).first()
-    if tracker.tracker_type == "mo_tracker":
-        options_list = Tracker.query.filter_by(tracker_id=tracker_id).first().user_defined_options.rsplit(",")
-        return render_template("editlog.html",log_id=log_id,tracker=tracker,options_list=options_list)
-    return render_template("editlog.html",log_id=log_id,tracker=tracker)
+    user_id = tracker.user_id
+    user_name = User.query.filter_by(user_id=user_id).first().user_name
 
-# edit log
+    if (log_data is None):
+        error_message = "Wrong Id number, please provide correct id"
+        return render_template("trackerdetails.html",user_logs=user_logs,tracker=tracker,user_name=user_name,error_message=error_message)
 
-@app.route("/editlog/<log_id>",methods=["POST"])
-def editlog(log_id):
-    tracker_id = Trackerlogs.query.filter_by(log_id=log_id).first().tracker_id
-    tracker_type = Tracker.query.filter_by(tracker_id=tracker_id).first().tracker_type
-    if tracker_type == "time_tracker":
-        log_value_hours = request.form.get("log_value_hours")
-        log_value_minutes = request.form.get("log_value_minutes")
-        edited_log_value = log_value_hours + " hours " + log_value_minutes + " minutes "
-    elif tracker_type == "mo_tracker":
-        options_list = Tracker.query.filter_by(tracker_id=tracker_id).first().user_defined_options.rsplit(",")
-        multiple_option_input = ""
-        for option in options_list:
-            if request.form.get(f"log_value_{option}") is not None:
-                multiple_option_input += request.form.get(f"log_value_{option}") + ","
-        
-        edited_log_value = multiple_option_input.rstrip(",")
-    else:
-        edited_log_value = request.form.get("log_value")
-    edited_log_note = request.form.get("log_note")
-    log_data = Trackerlogs.query.filter_by(log_id=log_id).first()
-    tracker_id = log_data.tracker_id
-    log_data.log_value = edited_log_value
-    log_data.log_note = edited_log_note
+    if log_value_new == "":
+        error_message = "Can not leave value field empty"
+        return render_template("trackerdetails.html",user_logs=user_logs,tracker=tracker,user_name=user_name,error_message=error_message)
+
+    if (log_data != None):
+        if (log_data.tracker_id != tracker.tracker_id):
+            error_message = "Wrong Id number, please enter correct id"       
+            return render_template("trackerdetails.html",user_logs=user_logs,tracker=tracker,user_name=user_name,error_message=error_message)
+
+    log_data.log_value = log_value_new
+    if log_note_new != "":
+        log_data.log_note = log_note_new
     db.session.commit()
     return redirect(f"/trackerdetails/{tracker_id}")
 

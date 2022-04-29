@@ -34,7 +34,7 @@
     <div class="col-12 col-sm-8 col-md-3 border border-light rounded-3 p-4">
         <div class="row">
             <div class="col">
-                <form action="/edittracker/{{tracker_id}}" method="post">
+                <form action="/edittracker/{{tracker['tracker_id']}}" method="post" id="edittracker">
                     <label class="form-label" for="tracker_name">Tracker name</label>
                     <input class="form-control" type="text" name="tracker_name" id="tracker_name"> <br>
                     <label class="form-label" for="tracker_description">Tracker description</label>
@@ -44,7 +44,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-auto">
-                <input class="btn btn-primary mt-3" type="submit" value="Confirm Edit">
+                <button form="edittracker" class="btn btn-primary mt-3" type="submit">Confirm Edit</button>
             </div>
         </div>
     </div>
@@ -76,24 +76,37 @@
 
         <!-- Form to edit vale and notes for individual record/log in a tracker -->
 
-        <!-- <div class="row justify-content-center d-none mt-4" id="editlogform">
-            <div class="col text-center">
+        <div class="row justify-content-center" id="editlogform">
+            <div class="col">
                 <div class="row">
-                    <div class="col">
+                    <div class="col text-center">
+                        {% if error_message != "" %}
+                        {{error_message}}
+                        {% else %}
                         Edit old value
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <form action="/editlog/{{log_id}}" method="post">
-                            {% include "value_input_form.html" %}
-                            <br>
-                            <input class="btn btn-warning" type="submit" value="Confirm">
+                        <form action="/editlogdetails" method="post" id="editlogdetails">
+                            <label class="col-form-label" for="log_id">Id number</label>
+                            <input class="form-control" type="text" id="log_id" name="log_id" placeholder="As seen in 1st column of the table">
+                            <label class="col-form-label" for="log_value">Value</label>
+                            <input class="form-control" type="text" id="log_value" name="log_value" placeholder=" As seen in 2nd column of the table">
+                            <label class="col-form-label" for="log_note">Notes (3rd column of the table)</label>
+                            <input class="form-control" type="text" id="log_note" name="log_note" placeholder="Leave blank to keep old note unchanged">
+                            <input type="text" hidden name="tracker_id" value="{{tracker['tracker_id']}}">
                         </form>
                     </div>
                 </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-auto">
+                        <button form="editlogdetails" class="btn btn-primary" type="submit">Confirm Edit</button>
+                    </div>
+                </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <!-- This is the table for log details of a tracker -->
@@ -117,9 +130,6 @@
                     <td>{{userlog["log_time"]}}</td>
                     <td>
                         <div class="row justify-content-center">
-                            <div class="col-6">
-                                <a class="btn btn-primary" href='/editlogform/{{userlog["log_id"]}}'>Edit</a>
-                            </div>
                             <div class="col">
                                 <a class="btn btn-danger" href='/deletelog/{{userlog["log_id"]}}'>Delete</a>
                             </div>

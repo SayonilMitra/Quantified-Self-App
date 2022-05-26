@@ -1,0 +1,7 @@
+.bgImage {
+    /* background image for front page */
+    background-image:url('../static/laptop table.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}

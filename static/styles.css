@@ -1,7 +1,12 @@
 .bgImage {
     /* background image for front page */
-    background-image:url('../static/laptop table.jpg');
+    background-image:url('../static/laptop_table1.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
+}
+
+.bgTracker {
+    /*background color fo each tracker box in dashboard*/
+    background-color: rgba(76, 45, 32, 0.624);
 }

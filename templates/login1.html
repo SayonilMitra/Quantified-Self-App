@@ -4,7 +4,7 @@
 
 <div>
     <div class="row justify-content-center">
-        <div class="col-auto mt-5 mb-5">
+        <div class="col-auto mt-5">
             <h1 class="">Better Habits</h1>
         </div>
     </div>
@@ -18,16 +18,25 @@
     </div>
     <div class="row justify-content-center">
 
+        <!-- Website brief -->
+        <div class="row justify-content-center mb-5" id="website_brief">
+            <div class="col-auto text-center">
+                Track the progress of things you care about. <br>
+                Daily water intake? How much sleep did you get in last 7 days? <br>
+                Track literaly anything, the way you want. <br>
+            </div>
+        </div>
+
         <!-- Login form -->
         <div class="col-9 col-sm-5 col-md-4 col-lg-3" id="login_form_main">
             <div class="row justify-content-center mb-4">
                 <div class="col-12 col-sm-auto text-center">
-                    <p>Log in to continue monitoring your habits</p>
+                    <p>Log in to continue tracking...</p>
                 </div>
             </div>
 
             <div class="row justify-content-center">
-                <div class="border border-dark rounded-3 p-4">
+                <div class="border border-light rounded-3 p-4">
                     <form action="/login" method="post" id="login_form">
                         <div class="row mb-2">
                             <div class="col-12 col-md-auto">
@@ -50,7 +59,7 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-auto">
-                                <button class="btn btn-dark" type="submit" form="login_form">Login</button>
+                                <button class="btn btn-warning" type="submit" form="login_form">Login</button>
                             </div>
                         </div>
                     </form>
@@ -58,7 +67,7 @@
             </div>
             <div class="row justify-content-center my-2">
                 <div class="col-auto">
-                    Don't have an account? <a href="#" class="link-secondary" onclick="changeForm()">Create one here</a>
+                    Don't have an account? Create one <a href="#" class="link-warning" onclick="changeForm()">HERE</a>
                 </div>
             </div>
         </div>
@@ -79,7 +88,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="border border-dark rounded-3 p-4">
+                <div class="border border-light rounded-3 p-4">
                     <form action="/register" method="post" id="sign_up_form">
                         <div class="row mb-2">
                             <div class="col-12 col-md-auto">
@@ -112,7 +121,7 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-auto">
-                                <button class="btn btn-dark" type="submit" form="sign_up_form">Create Account</button>
+                                <button class="btn btn-warning" type="submit" form="sign_up_form">Create Account</button>
                             </div>
                         </div>
                     </form>
@@ -120,7 +129,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    Have an account? <a href="#" class="link-secondary" onclick="changeForm()">Login</a>
+                    Have an account? <a href="#" class="link-warning" onclick="changeForm()">Login</a>
                 </div>
             </div>
         </div>
@@ -129,7 +138,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col text-center">
-                    Just want to view website's design? <a class="link-danger" href="/guest/dashboard">Guest view</a>
+                    Just want to view website's design? <a class="link-warning" href="/guest/dashboard">GUEST VIEW</a>
                 </div>
             </div>
         </div>

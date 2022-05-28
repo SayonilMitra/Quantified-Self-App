@@ -23,8 +23,22 @@ function showPassword() {
 }
 
 function changeForm() {
+    showLoginForm();
+    showRegisterForm();
+}
+
+function showLoginForm() {
     let login_form_visibility = document.getElementById("login_form_main");
-    let register_form_visibility = document.getElementById("register_form_main");
     login_form_visibility.classList.toggle("d-none");
+
+}
+
+function showRegisterForm() {
+    let register_form_visibility = document.getElementById("register_form_main");
     register_form_visibility.classList.toggle("d-none");
+    
+}
+
+function showTrackerForm() {
+    document.getElementById('edittrackerform').classList.toggle('d-none');
 }

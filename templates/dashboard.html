@@ -12,10 +12,16 @@
     </div>
 </div>
 
-<!-- Button to create tracker -->
 <div class="row mt-2 justify-content-center">
+
+    <!-- Button to create tracker -->
     <div class="col-auto">
         <a class="btn btn-warning" href="/tracker/{{user_name}}">Create a new tracker</a>
+    </div>
+
+    <!-- log out button -->
+    <div class="col-auto">
+        <a class="btn btn-secondary" href="/logout/{{user_name}}">Log Out</a>
     </div>
 </div>
 
@@ -33,8 +39,8 @@
             <div class="col-auto">
                 <div class="p-3 border-dark border rounded bgTracker">
                     Name - {{tracker["tracker_name"]}} <br>
-                    Last recorded - {{tracker["tracker_log_time"]}} <br>
                     Description - {{tracker["tracker_description"]}} <br>
+                    Last recorded - {{tracker["tracker_log_time"]}} <br>
                     {% if tracker["tracker_type"] == "numerical_tracker"%}Type - Numerical{% endif %}
                     {% if tracker["tracker_type"] == "boolean_tracker"%}Type - Yes/No{% endif %}
                     {% if tracker["tracker_type"] == "mo_tracker"%}Type - Multiple Options{% endif %}
@@ -48,11 +54,5 @@
     {% endfor %}
 </div>
 
-<!-- log out button -->
-<div class="row justify-content-center">
-    <div class="col-auto">
-        <a class="btn btn-secondary mt-5" href="/logout//{{user_name}}">Log Out</a>
-    </div>
-</div>
 
 {% endblock %}

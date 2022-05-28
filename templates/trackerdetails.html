@@ -4,9 +4,9 @@
 
 <div class="row mt-5 justify-content-center">
     <div class="col-auto d-flex text-center justify-content-center">
-        Tracker Name: {{tracker["tracker_name"]}} <br>
-        Description: {{tracker["tracker_description"]}} <br>
-        Tracker last updated: {{tracker["tracker_log_time"]}} <br>
+        Tracker Name - {{tracker["tracker_name"]}} <br>
+        Description - {{tracker["tracker_description"]}} <br>
+        Last updated - {{tracker["tracker_log_time"]}} <br>
     </div>
 </div>
 
@@ -20,9 +20,22 @@
     </div>
 </div>
 
+<div class="row my-2 justify-content-center">
+
+    <!-- button to take user back to dashboard -->
+    <div class="col-auto">
+        <a class="btn btn-light" href="/dashboard/{{user_name}}">Return to dashboard</a>
+    </div>
+
+    <!-- log out button -->
+    <div class="col-auto">
+        <a class="btn btn-secondary" href="/logout/{{user_name}}">Log Out</a>
+    </div>
+</div>
+
 <div class="row mt-2 justify-content-center">
     <div class="col-auto">
-        <a href="#" class="btn btn-light" onclick="showTrackerForm()">
+        <a href="#" class="btn btn-outline-light" onclick="showTrackerForm()">
             Edit Tracker Details (toggle)
         </a>
     </div>
@@ -44,7 +57,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-auto">
-                <button form="edittracker" class="btn btn-primary mt-3" type="submit">Confirm Edit</button>
+                <button form="edittracker" class="btn btn-light mt-3" type="submit">Confirm Edit</button>
             </div>
         </div>
     </div>
@@ -141,12 +154,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-</div>
-
-<div class="row mt-5 mb-5 justify-content-center">
-    <div class="col-auto">
-        <a class="btn btn-light" href="/dashboard/{{user_name}}">Return to dashboard</a>
     </div>
 </div>
 

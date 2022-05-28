@@ -72,6 +72,6 @@ def guest_dashboard():
     return render_template("guest_dashboard.html")
 
 
-@app.route("/guest/tracker_demo")
+@app.route("/guest/tracker_demo",methods=["GET","POST"])
 def guest_tracker_info():
     return render_template("guest_tracker_demo.html")

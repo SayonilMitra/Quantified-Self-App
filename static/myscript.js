@@ -42,3 +42,7 @@ function showRegisterForm() {
 function showTrackerForm() {
     document.getElementById('edittrackerform').classList.toggle('d-none');
 }
+
+function alertGuest() {
+    alert("Need to Log In to edit/save data")
+}

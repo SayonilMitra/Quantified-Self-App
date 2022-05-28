@@ -5,18 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title></title>
 </head>
 
-<body class="container-fluid bg-dark text-white">
+<body class="fs-5 bgImage text-white">
+
 
     <div class="row mt-5 justify-content-center">
         <div class="col-auto d-flex text-center justify-content-center">
-            Tracker Name: Water Intake <br>
-            Description: glasses of water each day <br>
-            Tracker last updated: Mon Mar 21 22:42:46 2022 <br>
+            Tracker Name - Water Intake <br>
+            Description - Glasses of water each day <br>
+            Last updated - Mon Mar 21 22:42:46 2022 <br>
         </div>
     </div>
 
@@ -27,9 +30,22 @@
         </div>
     </div>
 
+    <div class="row my-2 justify-content-center">
+
+        <!-- button to take user back to dashboard -->
+        <div class="col-auto">
+            <a class="btn btn-light" href="/guest/dashboard">Return to dashboard</a>
+        </div>
+
+        <!-- log out button -->
+        <div class="col-auto">
+            <a class="btn btn-secondary" href="/">Log Out</a>
+        </div>
+    </div>
+
     <div class="row mt-2 justify-content-center">
         <div class="col-auto">
-            <a href="#" class="btn btn-success" onclick="document.getElementById('edittrackerform').classList.toggle('d-none')">
+            <a href="#" class="btn btn-outline-light" onclick="showTrackerForm()">
                 Edit Tracker Details (toggle)
             </a>
         </div>
@@ -41,7 +57,7 @@
         <div class="col-12 col-sm-8 col-md-3 border border-light rounded-3 p-4">
             <div class="row">
                 <div class="col">
-                    <form action="/edittracker/" method="post">
+                    <form action="#" method="post" id="edittracker">
                         <label class="form-label" for="tracker_name">Tracker name</label>
                         <input class="form-control" type="text" name="tracker_name" id="tracker_name"> <br>
                         <label class="form-label" for="tracker_description">Tracker description</label>
@@ -51,7 +67,7 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <input class="btn btn-primary mt-3" type="submit" value="Confirm Edit">
+                    <button form="edittracker" class="btn btn-light mt-3" type="submit" onclick="alertGuest()">Confirm Edit</button>
                 </div>
             </div>
         </div>
@@ -69,10 +85,8 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col">
-                    <form id="record_value" class="" action='/createlog/1' method="post">
-
-
+                <div class="col-10">
+                    <form id="record_value" class="" action='#' method="post">
                         <div class="row">
                             <div class="col">
                                 <div class="row">
@@ -107,7 +121,32 @@
             </div>
             <div class="row mt-3 justify-content-center">
                 <div class="col-auto">
-                    <button form="record_value" class="btn btn-primary" type="submit">Add Value</button>
+                    <button form="record_value" class="btn btn-warning" type="submit" onclick="alertGuest()">Add Value</button>
+                </div>
+            </div>
+
+            <!-- Form to edit vale and notes for individual record/log in a tracker -->
+
+            <div class="row justify-content-center" id="editlogform">
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col">
+                            <form action="#" method="post" id="editlogdetails">
+                                <label class="col-form-label" for="log_id">Id number</label>
+                                <input class="form-control" type="text" id="log_id" name="log_id" placeholder="As seen in 1st column of the table">
+                                <label class="col-form-label" for="log_value">Value</label>
+                                <input class="form-control" type="text" id="log_value" name="log_value" placeholder=" As seen in 2nd column of the table">
+                                <label class="col-form-label" for="log_note">Notes (3rd column of the table)</label>
+                                <input class="form-control" type="text" id="log_note" name="log_note" placeholder="Leave blank to keep old note unchanged">
+                                <input type="text" hidden name="tracker_id" value="1">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row my-2 justify-content-center">
+                        <div class="col-auto">
+                            <button form="editlogdetails" class="btn btn-warning" type="submit" onclick="alertGuest()">Confirm Edit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,15 +154,17 @@
         <!-- This is the table for log details of a tracker -->
 
         <div class="col col-sm-12 col-md-12 col-xl-7">
-            <table class="table thead-light table-dark table-bordered table-hover text-center table-responsive align-middle">
-                <tr class="table-primary">
-                    <th>ID number</td>
-                    <th>Value</td>
-                    <th>Notes</th>
-                    <th>Date</td>
-                    <th>Action</th>
-                    <th class="d-none" id="hiddenHeader">Edit</th>
-                </tr>
+            <table class="table text-white table-bordered text-center table-responsive align-middle">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID number</th>
+                        <th>Value</th>
+                        <th>Notes</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                        <th class="d-none" id="hiddenHeader">Edit</th>
+                    </tr>
+                </thead>
                 <tbody>
 
                     <tr>
@@ -134,7 +175,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -148,7 +189,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -162,7 +203,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -176,7 +217,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -190,7 +231,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -204,7 +245,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -218,7 +259,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -232,7 +273,7 @@
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -240,13 +281,13 @@
 
                     <tr>
                         <td>27</td>
-                        <td>6.6</td>
+                        <td>8</td>
                         <td></td>
                         <td>Thu Apr 14 10:18:39 2022</td>
                         <td>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <a class="btn btn-danger" href=''>Delete</a>
+                                    <a class="btn btn-danger" href='#' onclick="alertGuest()">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -257,13 +298,8 @@
         </div>
     </div>
 
-    <div class="row mt-5 mb-5 justify-content-center">
-        <div class="col-auto">
-            <a class="btn btn-light" href="/">Login page</a>
-        </div>
-    </div>
-
 
 </body>
+<script src="../static/myscript.js"></script>
 
 </html>

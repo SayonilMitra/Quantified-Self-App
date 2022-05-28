@@ -1,104 +1,117 @@
-{% extends 'layout.html' %} {% block body %}
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row mt-5 justify-content-center">
-    <div class="col-auto h5">
-        Welcome guest user, this is an example dashboard
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Dashboard</title>
+</head>
+
+<body class="fs-5 bgImage text-white">
+
+
+    <!-- Display User name and other details -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-auto h5">
+            Welcome Guest, this is your dashboard
+        </div>
     </div>
-</div>
-
-<div class="row mt-2 justify-content-center">
-    <div class="col-auto h6">
-        Last logged in: Thu Apr 28 10:59:12 2022 <br>
+    <div class="row mt-2 justify-content-center">
+        <div class="col-auto h6">
+            Last logged in: Sat May 28 20:08:56 2022 <br>
+        </div>
     </div>
-</div>
 
-<div class="row mt-2 justify-content-center">
-    <div class="col-auto">
-        <a class="btn btn-success" href="#">Create a new tracker</a>
+    <div class="row mt-2 justify-content-center">
+
+        <!-- Button to create tracker -->
+        <div class="col-auto">
+            <a class="btn btn-warning" href="#" onclick="alertGuest()">Create a new tracker</a>
+        </div>
+
+        <!-- log out button -->
+        <div class="col-auto">
+            <a class="btn btn-secondary" href="/">Log Out</a>
+        </div>
     </div>
-</div>
 
-<div class="row mt-3 justify-content-center">
-    <div class="col-auto">
-        <h2 class="h2">List of example trackers</h2>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-auto">
+            <h2 class="h2">Trackers you made so far</h2>
+        </div>
     </div>
-</div>
 
-<!-- Display all user made trackers -->
+    <!-- Display all the trackers -->
+    <div class="row justify-content-center">
 
-<div class="row justify-content-center">
+        <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+            <div class="row justify-content-center text-center">
+                <div class="col-auto">
+                    <div class="p-3 border-dark border rounded bgTracker">
+                        Name - Water Intake <br>
+                        Description - Glasses of water each day <br>
+                        Last recorded - Mon Mar 21 22:42:46 2022 <br>
+                        Type - Numerical<br>
+                        <a class="btn btn-light mt-4 mb-2" href='/guest/tracker_demo'>Details</a><br>
+                        <a class="btn btn-danger mt-2 mb-2" href='#' onclick="alertGuest()">Remove</a> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
-        <div class="row justify-content-center text-center">
-            <div class="col-auto">
-                <div class="p-3 border-light border rounded">
-                    Name - Water Intake <br>
-                    Last recorded - Mon Mar 21 22:42:46 2022 <br>
-                    Description - glasses of water each day <br>
-                    Type - Numerical
-                    <br>
-                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a><br>
-                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
+        <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+            <div class="row justify-content-center text-center">
+                <div class="col-auto">
+                    <div class="p-3 border-dark border rounded bgTracker">
+                        Name - Sleep <br>
+                        Description - did I have enough sleep <br>
+                        Last recorded - Mon Mar 21 22:44:03 2022 <br>
+                        Type - Yes/No
+                        <br>
+                        <a class="btn btn-light mt-4 mb-2 disabled" href='#'>Details</a><br>
+                        <a class="btn btn-danger mt-2 mb-2" href='#' onclick="alertGuest()">Remove</a> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+            <div class="row justify-content-center text-center">
+                <div class="col-auto">
+                    <div class="p-3 border-dark border rounded bgTracker">
+                        Name - Exercise <br>
+                        Description - per day <br>
+                        Last recorded - Mon Mar 21 22:44:35 2022 <br>
+                        Type - Time Duration <br>
+                        <a class="btn btn-light mt-4 mb-2 disabled" href='#'>Details</a><br>
+                        <a class="btn btn-danger mt-2 mb-2" href='#' onclick="alertGuest()">Remove</a> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
+            <div class="row justify-content-center text-center">
+                <div class="col-auto">
+                    <div class="p-3 border-dark border rounded bgTracker">
+                        Name - Cars <br>
+                        Description - cars I saw today outside <br>
+                        Last recorded - Mon Mar 21 22:45:57 2022 <br>
+                        Type - Multiple Options
+                        <br>
+                        <a class="btn btn-light mt-4 mb-2 disabled" href='#'>Details</a><br>
+                        <a class="btn btn-danger mt-2 mb-2" href='#' onclick="alertGuest()">Remove</a> <br>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</body>
+<script src="../static/myscript.js"></script>
 
-    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
-        <div class="row justify-content-center text-center">
-            <div class="col-auto">
-                <div class="p-3 border-light border rounded">
-                    Name - Sleep <br>
-                    Last recorded - Mon Mar 21 22:44:03 2022 <br>
-                    Description - did I have enough sleep <br>
-                    Type - Yes/No
-                    <br>
-                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a>
-                    <br>
-                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
-        <div class="row justify-content-center text-center">
-            <div class="col-auto">
-                <div class="p-3 border-light border rounded">
-                    Name - Exercise <br>
-                    Last recorded - Mon Mar 21 22:44:35 2022 <br>
-                    Description - per day <br>
-                    Type - Time Duration <br>
-                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a>
-                    <br>
-                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-auto mr-3 mt-3 d-flex justify-content-center">
-        <div class="row justify-content-center text-center">
-            <div class="col-auto">
-                <div class="p-3 border-light border rounded">
-                    Name - Cars <br>
-                    Last recorded - Mon Mar 21 22:45:57 2022 <br>
-                    Description - cars I saw today outside <br>
-                    Type - Multiple Options
-                    <br>
-                    <a class="btn btn-primary mt-4 mb-2" href='#'>Details</a><br>
-                    <a class="btn btn-danger mt-2 mb-2" href='#'>Remove</a> <br>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-auto">
-        <a class="btn btn-danger mt-5" href="/">Login page</a>
-        <a class="btn btn-primary mt-5" href="/guest/tracker_demo">Example tracker page</a>
-    </div>
-</div>
-
-{% endblock %}
+</html>

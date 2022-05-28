@@ -8,18 +8,22 @@
             <h1 class="">Better Habits</h1>
         </div>
     </div>
+
+    {% if login_error_msg != "" %}
     <div class="row justify-content-center">
-        {% if login_error_msg != "" %}
+
         <div class="col-12 col-md-auto">
             {{login_error_msg}}
         </div>
         <br>
-        {% endif %}
+
     </div>
+    {% endif %}
+
     <div class="row justify-content-center">
 
         <!-- Website brief -->
-        <div class="row justify-content-center mb-5" id="website_brief">
+        <div class="row justify-content-center mb-2" id="website_brief">
             <div class="col-auto text-center">
                 Track the progress of things you care about. <br>
                 Daily water intake? How much sleep did you get in last 7 days? <br>
@@ -29,7 +33,7 @@
 
         <!-- Login form -->
         <div class="col-9 col-sm-5 col-md-4 col-lg-3" id="login_form_main">
-            <div class="row justify-content-center mb-4">
+            <div class="row justify-content-center my-1">
                 <div class="col-12 col-sm-auto text-center">
                     <p>Log in to continue tracking...</p>
                 </div>
@@ -136,8 +140,8 @@
 
         <!-- Guest view -->
         <div class="col-12">
-            <div class="row">
-                <div class="col text-center">
+            <div class="row justify-content-center">
+                <div class="col-auto text-center">
                     Just want to view website's design? <a class="link-warning" href="/guest/dashboard">GUEST VIEW</a>
                 </div>
             </div>

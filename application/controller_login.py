@@ -10,6 +10,10 @@ from flask import current_app as app
 def index():
     return render_template("login.html",title="Login")
 
+@app.route("/register_user")
+def register_user():
+    return render_template("register.html",title="Register")
+
 # login page
 
 @app.route("/login",methods=["POST","GET"])
@@ -43,9 +47,11 @@ def register():
     # check if user mame exists
     is_user_name_present = User.query.filter_by(user_name=user_name).first()
     if is_user_name_present != None:
-        return render_template("login.html",signup_error_msg="Username not available, try a different one",title="Login")
+        return render_template("register.html",signup_error_msg="Username not available, try a different one",title="Register")
     if password1 != password2:
-        return render_template("login.html",signup_error_msg="passwords must match",title="Login")
+        return render_template("register.html",signup_error_msg="Passwords must match",title="Register")
+    if (password1 == "") or (password2 == ""):
+        return render_template("register.html",signup_error_msg="Passwords can not be empty",title="Register")
 
     last_login_time = datetime.datetime.now().strftime("%c")
     user_login_data = User(user_name=user_name,password=password1,last_login_time=last_login_time)

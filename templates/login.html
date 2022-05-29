@@ -1,132 +1,165 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div class="row justify-content-center bg-primary">
-    <div class="col-auto mt-5">
-        <h1 class="text-white">Quantified Self App</h1>
-    </div>
-</div>
 
-{% if login_error_msg != "" %}
-<div class="row justify-content-center">
-    <div class="col-12 col-md-auto">
-        {{login_error_msg}}
-    </div>
-    <br>
-</div>
-{% endif %}
-
-<div class="row justify-content-center">
-
-    <!-- Login form -->
-    <div class="col-12 col-lg-3">
-        <div class="row justify-content-center mb-4">
-            <div class="col-12 col-sm-auto text-center">
-                <p>Already have an coount? Log in below</p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-auto border border-primary rounded-3 p-4">
-                <form action="/login" method="post" id="login_form">
-                    <div class="row mb-2">
-                        <div class="col-12 col-md-auto">
-                            <label for="user_name" class="form-label">User Name</label>
-                        </div>
-                        <div class="col-12 col-md-12">
-                            <input type="text" id="user_name" name="user_name" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-12 col-md-auto">
-                            <label for="password" class="form-label">Password</label>
-                        </div>
-                        <div class="col-12 col-md-12">
-                            <input type="password" id="password" name="password" placeholder="" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            <button class="btn btn-primary" type="submit" form="login_form">Login</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div>
+    <div class="row justify-content-center">
+        <div class="col-auto mt-5">
+            <h1 class="">Better Habits</h1>
         </div>
     </div>
 
-    <!-- Guest view -->
-    <div class="col-12 col-lg-3">
-        <!-- <div class="row mt-3 justify-content-center">
-            <div class="col-6">
-                <img class="img-fluid" height="300px" src="{{ url_for('static', filename='person.png') }}" alt="Guest user">
-            </div>
-        </div> -->
-        <div class="row">
-            <div class="col text-center">
-                No need to Log In/Sign Up. <br>
-                Click to view the look of available web pages <br>
-                Can not edit/save data in Guest mode.
-            </div>
-        </div>
-        <div class="row m-2 justify-content-center">
-            <div class="col-auto">
-                <a class="btn btn-primary" href="/guest/dashboard">Guest view</a>
-            </div>
-        </div>
-    </div>
+    {% if login_error_msg != "" %}
+    <div class="row justify-content-center">
 
-    <!-- Sign up/Register form -->
-    <div class="col-12 col-lg-3">
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-auto text-center">
-                <p>New here? Create new account below</p>
-                {% if signup_error_msg != "" %}
-                <div>
-                    {{signup_error_msg}}
+        <div class="col-12 col-md-auto">
+            {{login_error_msg}}
+        </div>
+        <br>
+
+    </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+
+        <!-- Website brief -->
+        <div class="row justify-content-center mb-2" id="website_brief">
+            <div class="col-auto text-center">
+                Track the progress of things you care about. <br>
+                Daily water intake? How much sleep did you get in last 7 days? <br>
+                Track literaly anything, the way you want. <br>
+            </div>
+        </div>
+
+        <!-- Login form -->
+        <div class="col-9 col-sm-5 col-md-4 col-lg-3" id="login_form_main">
+            <div class="row justify-content-center my-1">
+                <div class="col-12 col-sm-auto text-center">
+                    <p>Log in to continue tracking...</p>
                 </div>
-                <br>
-                {% endif %}
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="border border-light rounded-3 p-4">
+                    <form action="/login" method="post" id="login_form">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-auto">
+                                <label for="user_name" class="form-label">User Name</label>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <input type="text" id="user_name" name="user_name" placeholder="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-12 col-md-auto">
+                                <label for="password" class="form-label">Password</label>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <input type="password" id="password" name="password" placeholder="" class="form-control">
+                            </div>
+                            <div class="">
+                                <input type="checkbox" onclick="showPassword()"> Show Password
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <button class="btn btn-warning" type="submit" form="login_form">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-center my-2">
+                <div class="col-auto">
+                    Don't have an account? Create one <a href="#" class="link-warning" onclick="changeForm()">HERE</a>
+                </div>
             </div>
         </div>
 
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-auto border border-primary rounded-3 p-4">
-                <form action="/register" method="post" id="sign_up_form">
-                    <div class="row mb-2">
-                        <div class="col-12 col-md-auto">
-                            <label for="user_name" class="form-label">User Name</label>
-                        </div>
-                        <div class="col-12 col-md-12">
-                            <input type="text" id="user_name" name="user_name" placeholder="Username" class="form-control">
-                        </div>
+        <!-- Sign up/Register form -->
+
+        <div class="col-9 col-sm-5 col-md-4 col-lg-3 d-none" id="register_form_main">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-auto text-center">
+                    Start tracking your daily habits the way you want
+                    {% if signup_error_msg != "" %}
+                    <div>
+                        {{signup_error_msg}}
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-12 col-md-auto">
-                            <label for="password1" class="form-label">Password</label>
+                    <br>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="border border-light rounded-3 p-4">
+                    <form action="/register" method="post" id="sign_up_form">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-auto">
+                                <label for="user_name" class="form-label">User Name</label>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <input type="text" id="user_name" name="user_name" placeholder="" class="form-control">
+                            </div>
                         </div>
-                        <div class="col-12 col-md-12">
-                            <input type="password" id="password1" name="password1" placeholder="Type Password"
-                                class="form-control">
+                        <div class="row mb-2">
+                            <div class="col-12 col-md-auto">
+                                <label for="password1" class="form-label">Password</label>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <input type="password" id="password1" name="password1" placeholder=""
+                                    class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-12 col-md-auto">
-                            <label for="password2" class="form-label">Password</label>
+                        <div class="row mb-4">
+                            <div class="col-12 col-md-auto">
+                                <label for="password2" class="form-label">Confirm Password</label>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <input type="password" id="password2" name="password2" placeholder=""
+                                    class="form-control">
+                            </div>
+                            <div class="">
+                                <input type="checkbox" onclick="showPassword()"> Show Password
+                            </div>
                         </div>
-                        <div class="col-12 col-md-12">
-                            <input type="password" id="password2" name="password2" placeholder="Confirm Password"
-                                class="form-control">
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <button class="btn btn-warning" type="submit" form="sign_up_form">Create Account</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            <button class="btn btn-primary" type="submit" form="sign_up_form">Create Account</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    Have an account? <a href="#" class="link-warning" onclick="changeForm()">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guest view -->
+        <div class="col-12">
+            <div class="row justify-content-center">
+                <div class="col-auto text-center">
+                    Just want to view website's design? <a class="link-warning" href="/guest/dashboard">GUEST VIEW</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Github link -->
+        <div class="col-12 col-lg-3">
+            <div class="row justify-content-center">
+                <div class="col text-center">
+                    This project on <a class="link-secondary" href="https://github.com/SayonilMitra/Quantified-Self-App">Github</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 {% endblock %}
